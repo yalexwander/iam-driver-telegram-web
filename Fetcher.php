@@ -81,8 +81,7 @@ class TelegramWebFetcher extends AbstractFetcherDriver implements FetchDriverInt
 
             if (! $this->messageWithGivenIdAlreadyDownloaded($postId . "@" . $this->getCode())) {
                 $this->processPostAttachements($postNode, $msg, $sourceConfig);
-            }
-            elseif ($this->postContainsAttachements($postNode)) {
+            } elseif ($this->postContainsAttachements($postNode)) {
                 $msg->setExternalAttachements([ new SerializationAttachement() ]);
             }
 
@@ -237,12 +236,13 @@ class TelegramWebFetcher extends AbstractFetcherDriver implements FetchDriverInt
         return $this->getMailbox()->msgExists($id);
     }
 
-    protected function getPostUrl(SimpleHtmlDomInterface $postNode) : string
+    protected function getPostUrl(SimpleHtmlDomInterface $postNode): string
     {
         return $postNode->findOneOrFalse("a.tgme_widget_message_date")->getAttribute("href");
     }
 
-    protected function postContainsAttachements(SimpleHtmlDomInterface $postNode) : bool {
+    protected function postContainsAttachements(SimpleHtmlDomInterface $postNode): bool
+    {
         return (
             $postNode->findOneOrFalse(".tgme_widget_message_photo_wrap") or
             $postNode->findOneOrFalse(".tgme_widget_message_video_wrap")
